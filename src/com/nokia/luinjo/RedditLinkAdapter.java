@@ -10,9 +10,9 @@ import android.widget.TextView;
 public class RedditLinkAdapter extends BaseAdapter {
 	
 	private final Context mContext;
-	private final String[] mItems;
+	private final RedditLinkItem[] mItems;
 	
-	public RedditLinkAdapter(Context context, String[] items) {
+	public RedditLinkAdapter(Context context, RedditLinkItem[] items) {
 		mContext = context;
 		mItems = items;
 	}
@@ -40,7 +40,7 @@ public class RedditLinkAdapter extends BaseAdapter {
 		
 		View rowView = inflater.inflate(R.layout.listitem_link, parent, false);
 		TextView textView = (TextView) rowView.findViewById(R.id.label);
-		textView.setText(mItems[position]);
+		textView.setText(mItems[position].getTitle());
 		
 		return rowView;
 	}	
