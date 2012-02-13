@@ -1,4 +1,8 @@
-package com.nokia.luinjo;
+package com.nokia.luinjo.reddit;
+
+import com.nokia.luinjo.R;
+import com.nokia.luinjo.R.id;
+import com.nokia.luinjo.R.layout;
 
 import android.content.Context;
 import android.view.LayoutInflater;

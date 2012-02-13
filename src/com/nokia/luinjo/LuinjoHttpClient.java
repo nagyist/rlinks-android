@@ -17,16 +17,11 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.util.Log;
 
-public class RedditHttpClient {
+public class LuinjoHttpClient {
 	
-	private static final String TAG  = "RedditHttpClient";
-	private static final String REDDIT_BASE_URL = "http://www.reddit.com/";
-	
-    public String getTopStories() {
-    	return getContent(REDDIT_BASE_URL + ".json");
-    }
+	private static final String TAG  = "LuinjoHttpClient";
 
-    private String getContent(String url) {
+    public String getContent(String url) {
     	HttpGet request = new HttpGet();    	
 		try {
 			URI uri = new URI(url);

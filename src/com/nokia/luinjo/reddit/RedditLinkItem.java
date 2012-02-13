@@ -1,4 +1,4 @@
-package com.nokia.luinjo;
+package com.nokia.luinjo.reddit;
 
 import org.json.JSONException;
 import org.json.JSONObject;
