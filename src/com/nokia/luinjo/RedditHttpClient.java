@@ -20,7 +20,7 @@ import android.util.Log;
 public class RedditHttpClient {
 	
 	private static final String TAG  = "RedditHttpClient";
-	private static final String REDDIT_BASE_URL = "http:/www.reddit.com/";
+	private static final String REDDIT_BASE_URL = "http://www.reddit.com/";
 	
     public String getTopStories() {
     	return getContent(REDDIT_BASE_URL + ".json");

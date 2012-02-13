@@ -1,5 +1,8 @@
 package com.nokia.luinjo;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class RedditLinkItem {
 	
 	private String title;
@@ -60,5 +63,13 @@ public class RedditLinkItem {
 
 	public void setAuthor(String author) {
 		this.author = author;
+	}
+	
+	public RedditLinkItem() {}
+	
+	public static RedditLinkItem fromJson(JSONObject obj) throws JSONException {
+		RedditLinkItem rli = new RedditLinkItem();
+		rli.setTitle(obj.getString("title"));
+		return rli;
 	}
 }
