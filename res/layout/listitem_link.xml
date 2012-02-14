@@ -3,8 +3,11 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="10dp"       
-    android:textSize="14sp">
+    android:paddingTop="10dp"
+    android:paddingBottom="12dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    >       
 
     <!--  
     <ImageView
@@ -23,7 +26,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="This must be the coolest cat I've ever seen!"
-        android:textSize="17sp"        
+        android:textSize="15sp"        
         />
 
     <TextView
@@ -31,16 +34,17 @@
         android:text="3030"
         android:textStyle="bold"
         android:layout_width="wrap_content"
+        android:minWidth="50sp"
         android:layout_height="wrap_content"        
-        android:layout_below="@id/title"        
+        android:layout_below="@id/title"
+        android:gravity="center"        
         android:background="@drawable/rounded_corners"
         android:textColor="#ffffff"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginTop="12dp"
         android:paddingTop="6dp"
         android:paddingBottom="6dp"
         android:paddingLeft="7dp"
-        android:paddingRight="7dp"        
+        android:paddingRight="7dp"                
         />
 
     <TextView

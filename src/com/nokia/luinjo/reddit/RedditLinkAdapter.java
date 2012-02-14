@@ -41,10 +41,10 @@ public class RedditLinkAdapter extends BaseAdapter {
 		return position;
 	}
 
+	// TODO: reuse convertView if possible
 	public View getView(int position, View convertView, ViewGroup parent) {
 		LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);		
-		View rowView = inflater.inflate(R.layout.listitem_link, parent, false);
-		
+		View rowView = inflater.inflate(R.layout.listitem_link, parent, false);		
 		
 		RedditLinkItem item = mItems[position];
 		((TextView) rowView.findViewById(R.id.title)).setText(item.getTitle());
@@ -54,5 +54,5 @@ public class RedditLinkAdapter extends BaseAdapter {
 		((TextView) rowView.findViewById(R.id.subreddit)).setText(item.getSubreddit());
 		
 		return rowView;
-	}	
+	}
 }

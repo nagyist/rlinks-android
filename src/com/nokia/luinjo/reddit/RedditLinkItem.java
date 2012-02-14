@@ -1,12 +1,18 @@
 package com.nokia.luinjo.reddit;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class RedditLinkItem {
+public class RedditLinkItem implements Serializable {
 	
+	/**
+	 * Generated version UID for serialization.
+	 */
+	private static final long serialVersionUID = -5669509681428117593L;
+
 	public static RedditLinkItem fromJson(JSONObject obj) throws JSONException {
 		RedditLinkItem rli = new RedditLinkItem();
 		rli.setAuthor(obj.getString("author"));
