@@ -38,7 +38,8 @@ public class LuinjoHttpClient {
     private String getContent(HttpUriRequest request) {
     	HttpResponse response = null;    	
     	try {        	
-        	HttpClient client = new DefaultHttpClient();        	    
+        	HttpClient client = new DefaultHttpClient();
+        	Log.d(TAG, "Making request to " + request.getURI());
         	response = client.execute(request);        	    		
     	} catch (IOException e) {
     		Log.e(TAG, "IOException executing HTTP request: " + e.getMessage());
