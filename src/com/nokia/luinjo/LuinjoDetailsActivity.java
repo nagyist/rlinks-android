@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.nokia.luinjo.reddit.RedditLinkItem;
+import com.nokia.luinjo.reddit.RedditLinkItemView;
 
 public class LuinjoDetailsActivity extends Activity {
 	
@@ -22,6 +23,8 @@ public class LuinjoDetailsActivity extends Activity {
 		Log.d(TAG, "Received an item: " + item.toString());
 		
 		setContentView(R.layout.details);
+		RedditLinkItemView itemView = (RedditLinkItemView) findViewById(R.id.link_item);
+		itemView.populateWith(item);
 	}
 	
 	@Override

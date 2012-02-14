@@ -4,9 +4,16 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
+    <com.nokia.luinjo.reddit.RedditLinkItemView
+        android:id="@+id/link_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <!-- 
     <include
         android:id="@+id/item"
         layout="@layout/listitem_link" />
+    -->
 
     <ImageView
         xmlns:android="http://schemas.android.com/apk/res/android"
