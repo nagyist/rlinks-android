@@ -2,6 +2,7 @@ package com.nokia.luinjo;
 
 import android.app.ListActivity;
 import android.app.ProgressDialog;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,7 +18,9 @@ public class LuinjoMainActivity extends ListActivity {
 
 	private static final String TAG = "MainActivity";
 
-	/** Called when the activity is first created. */
+	/**
+	 * Called when the activity is first created.
+	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,5 +48,14 @@ public class LuinjoMainActivity extends ListActivity {
 		setListAdapter(adapter);
 
 		dialog.hide();
+	}
+	
+	/**
+	 * Override onConfigurationChanged to prevent reloading the activity on orientation change.
+	 * This also requires android:configChanges="orientation" added in the manifest.
+	 */
+	@Override
+    public void onConfigurationChanged(Configuration newConfig){
+        super.onConfigurationChanged(newConfig);
 	}
 }
