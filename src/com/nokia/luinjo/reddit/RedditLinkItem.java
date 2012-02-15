@@ -43,6 +43,8 @@ public class RedditLinkItem implements Serializable {
 	
 	private String mTitle;
 	
+	private String mThumbnail;
+	
 	private String mUrl;
 
 	public RedditLinkItem() {}
@@ -78,6 +80,10 @@ public class RedditLinkItem implements Serializable {
 	public String getTitle() {
 		return mTitle;
 	}
+	
+	public String getThumbnail() {
+		return mThumbnail;
+	}
 
 	public String getUrl() {
 		return mUrl;
@@ -109,6 +115,10 @@ public class RedditLinkItem implements Serializable {
 	
 	public void setSubreddit(String subreddit) {
 		this.mSubreddit = subreddit;
+	}
+	
+	public void setThumbnail(String thumbnail) {
+		this.mThumbnail = thumbnail;
 	}
 	
 	public void setTitle(String title) {

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -47,9 +48,10 @@ public class LuinjoMainActivity extends ListActivity {
 	private void populateList() {
 		ProgressDialog dialog = ProgressDialog.show(
 				LuinjoMainActivity.this, "", getResources().getText(R.string.loading), true);
-
+		
 		RedditClient client = new RedditClient();
 		RedditLinkItem[] items = client.getTopStories();
+		Log.d(TAG, "Loaded " + items.length + " items");
 		RedditLinkAdapter adapter = new RedditLinkAdapter(this, items);
 		setListAdapter(adapter);
 
