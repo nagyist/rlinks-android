@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.nokia.luinjo.reddit.RedditClient;
 import com.nokia.luinjo.reddit.RedditLinkItem;
 import com.nokia.luinjo.reddit.RedditLinkItemView;
 
@@ -37,7 +38,8 @@ public class LuinjoDetailsActivity extends Activity {
 		RedditLinkItemView itemView = (RedditLinkItemView) findViewById(R.id.link_item);
 		itemView.populateWith(item);
 		
-		showOrHideImage(item);		
+		showOrHideImage(item);
+		loadComments(item);
 	}
 	
 	private boolean isImage(String url) {
@@ -58,6 +60,11 @@ public class LuinjoDetailsActivity extends Activity {
 		if (imageBitmap != null) {
 			imageView.setImageBitmap(imageBitmap);
 		}
+	}
+	
+	private void loadComments(RedditLinkItem item) {
+		RedditClient client = new RedditClient();
+		client.getComments(item);
 	}
 	
 	private Bitmap getImageBitmapFromUrl(String imageUrlStr) {
