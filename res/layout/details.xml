@@ -14,19 +14,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|center_horizontal"
-         />
-
-    <!--
-    <include
-        android:id="@+id/item"
-        layout="@layout/listitem_link" />
-    -->
+        />
 
     <ImageView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:contentDescription="(separator)"
         android:paddingBottom="2dp"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
@@ -38,5 +31,4 @@
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
 </LinearLayout>
