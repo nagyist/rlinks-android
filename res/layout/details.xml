@@ -8,14 +8,7 @@
         android:id="@+id/link_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-
-    <ImageView
-        android:id="@+id/link_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|center_horizontal"
-        />
-
+    
     <ImageView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
@@ -28,7 +21,32 @@
         android:src="@android:drawable/divider_horizontal_bright" />
 
     <ListView
-        android:id="@android:id/list"
+        android:id="@+id/comments_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content" />
+
+    <!--
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/android:list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+	    >
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/link_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|center_horizontal" />
+
+        </LinearLayout>
+    </ScrollView>
+    -->        
+
 </LinearLayout>

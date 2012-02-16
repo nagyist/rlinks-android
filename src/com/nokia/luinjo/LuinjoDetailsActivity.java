@@ -7,6 +7,8 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.res.Configuration;
@@ -16,8 +18,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
 
 import com.nokia.luinjo.reddit.RedditClient;
+import com.nokia.luinjo.reddit.RedditComment;
+import com.nokia.luinjo.reddit.RedditCommentAdapter;
 import com.nokia.luinjo.reddit.RedditLinkItem;
 import com.nokia.luinjo.reddit.RedditLinkItemView;
 
@@ -25,7 +30,10 @@ public class LuinjoDetailsActivity extends Activity {
 
     private static final String TAG = "DetailsActivity";
 
+    private RedditLinkItem mLinkItem;
+    private RedditLinkItemView mLinkView;
     private ImageView mImageView;
+    private ListView mCommentsView;
 
     /**
      * Called when the activity is first created.
@@ -34,27 +42,28 @@ public class LuinjoDetailsActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        RedditLinkItem item = (RedditLinkItem) getIntent().getSerializableExtra(
-                RedditLinkItem.class.getName());
-        Log.d(TAG, "Received an item: " + item.toString());
-
         setContentView(R.layout.details);
-        mImageView = (ImageView) findViewById(R.id.link_image);
+        mLinkView = (RedditLinkItemView) findViewById(R.id.link_item);
+        // mImageView = (ImageView) findViewById(R.id.link_image);
+        mCommentsView = (ListView) findViewById(R.id.comments_list);
 
-        RedditLinkItemView itemView = (RedditLinkItemView) findViewById(R.id.link_item);
-        itemView.populateWith(item);
+        // Get link item passed with the intent
+        mLinkItem = (RedditLinkItem) getIntent().getSerializableExtra(
+                RedditLinkItem.class.getName());
 
-        showOrHideImage(item);
-        // loadComments(item);
+        mLinkView.populateWith(mLinkItem);
+        // showOrHideImage();
+        loadComments();
     }
 
     private boolean isImage(String url) {
         return (url.endsWith(".jpg") || url.endsWith(".png") || url.endsWith(".gif"));
     }
 
-    private void showOrHideImage(final RedditLinkItem item) {
+    private void showOrHideImage() {
+        final String itemUrl = mLinkItem.getUrl();
         // If the URL looks like an image, show the ImageView; otherwise hide it
-        boolean isImage = isImage(item.getUrl());
+        boolean isImage = isImage(itemUrl);
         mImageView.setVisibility(isImage ? View.VISIBLE : View.INVISIBLE);
         if (!isImage) {
             return;
@@ -63,7 +72,7 @@ public class LuinjoDetailsActivity extends Activity {
         // Load the image bitmap in a non-blocking thread
         new Thread(new Runnable() {
             public void run() {
-                final Bitmap imageBitmap = getImageBitmapFromUrl(item.getUrl());
+                final Bitmap imageBitmap = getImageBitmapFromUrl(itemUrl);
                 if (imageBitmap != null) {
                     mImageView.post(new Runnable() {
                         public void run() {
@@ -75,9 +84,24 @@ public class LuinjoDetailsActivity extends Activity {
         }).start();
     }
 
-    private void loadComments(RedditLinkItem item) {
-        RedditClient client = new RedditClient();
-        client.getComments(item);
+    private void loadComments() {
+        final List<RedditComment> comments = new ArrayList<RedditComment>();
+        final RedditCommentAdapter adapter = new RedditCommentAdapter(this, comments);
+        mCommentsView.setAdapter(adapter);
+                
+        new Thread(new Runnable() {
+            public void run() {
+                Log.d(TAG, "Loading comments...");
+                RedditClient client = new RedditClient();
+                comments.addAll(client.getComments(mLinkItem));
+                
+                mCommentsView.post(new Runnable() {
+                    public void run() {
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        }).start();
     }
 
     private Bitmap getImageBitmapFromUrl(String imageUrlStr) {
@@ -86,7 +110,7 @@ public class LuinjoDetailsActivity extends Activity {
         InputStream is = null;
         BufferedInputStream buffer = null;
         Bitmap bitmap = null;
-        
+
         try {
             imageUrl = new URL(imageUrlStr);
             connection = (HttpURLConnection) imageUrl.openConnection();
@@ -109,7 +133,7 @@ public class LuinjoDetailsActivity extends Activity {
                 e.printStackTrace();
             }
         }
-        
+
         return bitmap;
     }
 
