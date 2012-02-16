@@ -11,9 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -51,8 +53,16 @@ public class LuinjoDetailsActivity extends Activity {
         mLinkItem = (RedditLinkItem) getIntent().getSerializableExtra(
                 RedditLinkItem.class.getName());
 
+        // Open link in browser on tap
         mLinkView.populateWith(mLinkItem);
-        // showOrHideImage();
+        mLinkView.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                final Intent intent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse(mLinkItem.getUrl()));
+                startActivity(intent);
+            }
+        });        
+        
+        // showOrHideImage();        
         loadComments();
     }
 
@@ -88,13 +98,14 @@ public class LuinjoDetailsActivity extends Activity {
         final List<RedditComment> comments = new ArrayList<RedditComment>();
         final RedditCommentAdapter adapter = new RedditCommentAdapter(this, comments);
         mCommentsView.setAdapter(adapter);
-                
+
+        // Load comments in a separate thread
         new Thread(new Runnable() {
             public void run() {
                 Log.d(TAG, "Loading comments...");
                 RedditClient client = new RedditClient();
                 comments.addAll(client.getComments(mLinkItem));
-                
+
                 mCommentsView.post(new Runnable() {
                     public void run() {
                         adapter.notifyDataSetChanged();
