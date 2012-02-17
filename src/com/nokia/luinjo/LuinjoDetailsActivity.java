@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ViewSwitcher;
 
 import com.nokia.luinjo.reddit.RedditClient;
 import com.nokia.luinjo.reddit.RedditComment;
@@ -36,6 +37,8 @@ public class LuinjoDetailsActivity extends Activity {
     private RedditLinkItemView mLinkView;
     private ImageView mImageView;
     private ListView mCommentsView;
+    
+    private ViewSwitcher mViewSwitcher;
 
     /**
      * Called when the activity is first created.
@@ -48,6 +51,7 @@ public class LuinjoDetailsActivity extends Activity {
         mLinkView = (RedditLinkItemView) findViewById(R.id.link_item);
         // mImageView = (ImageView) findViewById(R.id.link_image);
         mCommentsView = (ListView) findViewById(R.id.comments_list);
+        mViewSwitcher = (ViewSwitcher) findViewById(R.id.view_switcher);
 
         // Get link item passed with the intent
         mLinkItem = (RedditLinkItem) getIntent().getSerializableExtra(
@@ -109,6 +113,7 @@ public class LuinjoDetailsActivity extends Activity {
                 mCommentsView.post(new Runnable() {
                     public void run() {
                         adapter.notifyDataSetChanged();
+                        mViewSwitcher.showNext();
                     }
                 });
             }

@@ -63,7 +63,7 @@ public class RedditClient {
 	public List<RedditComment> getComments(RedditLinkItem item) {
 		String commentsJson = httpClient.getContent(REDDIT_BASE_URL + item.getPermalink() + ".json");
 
-		List<RedditComment> comments = new ArrayList<RedditComment>();
+		final List<RedditComment> comments = new ArrayList<RedditComment>();
 		JSONArray commentsJsonArray = null;
 		JSONArray childrenJsonArray = null;
 		JSONObject listingJsonObject = null;
@@ -82,9 +82,9 @@ public class RedditClient {
 			try {
 				containerJsonObj = childrenJsonArray.getJSONObject(i);
 				dataJsonObj = containerJsonObj.getJSONObject("data");
-
-				RedditComment comment = getCommentWithChildren(dataJsonObj, 0);
-				comments.add(comment);
+				
+				
+				addCommentWithChildren(comments, dataJsonObj, 0);
 			} catch (JSONException e) {
 				Log.e(TAG, "Could not parse comment JSON: " + e.getMessage());
 			}
@@ -93,16 +93,18 @@ public class RedditClient {
 		return comments;
 	}
 
-	private RedditComment getCommentWithChildren(JSONObject dataJsonObj, int level) throws JSONException {
+	private void addCommentWithChildren(List<RedditComment> comments, JSONObject dataJsonObj, int level) throws JSONException {
 		Log.d(TAG, "getCommentWithChildren called for level " + level);
 
 		JSONObject listingJsonObject = dataJsonObj.optJSONObject("replies");
-		List<RedditComment> children = null;
 
+        RedditComment comment = RedditComment.fromJson(dataJsonObj);
+        comment.setLevel(level);
+        comments.add(comment);
+		
 		if (listingJsonObject != null) {
 			JSONArray childrenJsonArray = listingJsonObject.getJSONObject("data").getJSONArray("children");
 
-			children = new ArrayList<RedditComment>();
 			JSONObject childContainerJsonObj, childDataJsonObj;
 			for (int i = 0, len = childrenJsonArray.length(); i < len; i++) {
 				childContainerJsonObj = childrenJsonArray.getJSONObject(i);
@@ -110,16 +112,11 @@ public class RedditClient {
 
 				String kind = childContainerJsonObj.getString("kind");
 				if (kind.equals("t1")) {
-					children.add(getCommentWithChildren(childDataJsonObj, level++));
+					addCommentWithChildren(comments, childDataJsonObj, level++);
 				} else {
 					System.out.println("End of replies reached");
 				}
 			}
 		}
-
-		RedditComment comment = RedditComment.fromJson(dataJsonObj);
-		comment.setChildren(children);
-		comment.setLevel(level);
-		return comment;
 	}
 }

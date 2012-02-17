@@ -47,7 +47,18 @@ public class RedditCommentAdapter extends BaseAdapter {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.listitem_comment, parent, false);
         }
-        ((TextView) view.findViewById(R.id.body)).setText(getItem(position).getBody());
+        
+        // TODO: set item left margin instead if possible
+        RedditComment item = getItem(position);
+        int depthOffset = 10 * item.getLevel();
+        
+        TextView author = (TextView) view.findViewById(R.id.author);
+        author.setPadding(depthOffset, 0, 0, 0);
+        author.setText(item.getAuthor());
+        
+        TextView body = (TextView) view.findViewById(R.id.body);
+        body.setPadding(depthOffset, 0, 0, 0);
+        body.setText(item.getBody());
         
         return view;
     }
