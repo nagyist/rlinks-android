@@ -21,14 +21,26 @@
     </ImageView>
     -->
 
+    <ImageView
+        android:id="@+id/thumbnail"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_launcher"
+        />
+
     <TextView
         android:id="@+id/title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="This must be the coolest cat I've ever seen!"
+        android:layout_toLeftOf="@id/thumbnail"
+        android:layout_alignWithParentIfMissing="true"
+        android:text="Don't you think this is the coolest cat picture you've ever seen?"
         android:textSize="15sp"        
         />
-
+    
     <TextView
         android:id="@+id/score"
         android:text="3030"
@@ -38,7 +50,7 @@
         android:layout_height="wrap_content"        
         android:layout_below="@id/title"
         android:gravity="center"        
-        android:background="@drawable/rounded_corners"
+        android:background="@drawable/score_background"
         android:textColor="#ffffff"
         android:layout_marginTop="12dp"
         android:paddingTop="6dp"
@@ -58,26 +70,39 @@
         android:layout_alignTop="@id/score"
         android:layout_toRightOf="@id/score"
         />
-        
+
+    <TextView
+        android:id="@+id/subreddit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="funny"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        android:layout_alignBottom="@id/score"
+        android:layout_alignLeft="@id/domain"                
+        />       
+    
+    <TextView
+        android:id="@+id/textseparator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="|"
+        android:textSize="11sp"
+        android:textColor="#666666"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
+        android:layout_alignBaseline="@id/subreddit"
+        android:layout_toRightOf="@id/subreddit"
+        />
+    
     <TextView
         android:id="@+id/num_comments"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="18 comments"
         android:textSize="11sp"
-        android:layout_alignBottom="@id/score"
-        android:layout_alignLeft="@id/domain"        
-        />
-    
-    <TextView
-        android:id="@+id/subreddit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="funny"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        android:layout_alignParentRight="true"
-        android:layout_alignBaseline="@id/score"
-        />       
+        android:layout_toRightOf="@id/textseparator"
+        android:layout_alignBottom="@id/subreddit"
+        />    
     
 </RelativeLayout>

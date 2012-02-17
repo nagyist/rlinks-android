@@ -74,6 +74,7 @@ public class RedditClient {
 			childrenJsonArray = listingJsonObject.getJSONObject("data").getJSONArray("children");
 		} catch (JSONException e) {
 			Log.e(TAG, "Could not parse JSON response into array: " + e.getMessage());
+			return comments;
 		}
 
 		// TODO: merge with getCommentWithChildren()		
@@ -94,8 +95,6 @@ public class RedditClient {
 	}
 
 	private void addCommentWithChildren(List<RedditComment> comments, JSONObject dataJsonObj, int level) throws JSONException {
-		Log.d(TAG, "getCommentWithChildren called for level " + level);
-
 		JSONObject listingJsonObject = dataJsonObj.optJSONObject("replies");
 
         RedditComment comment = RedditComment.fromJson(dataJsonObj);

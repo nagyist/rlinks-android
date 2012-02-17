@@ -22,6 +22,7 @@ public class RedditLinkItem implements Serializable {
 		rli.setPermalink(obj.getString("permalink"));
 		rli.setSubreddit(obj.getString("subreddit"));
 		rli.setScore(obj.getInt("score"));
+		rli.setThumbnail(obj.getString("thumbnail"));
 		rli.setTitle(obj.getString("title"));
 		rli.setUrl(obj.getString("url"));
 		return rli;

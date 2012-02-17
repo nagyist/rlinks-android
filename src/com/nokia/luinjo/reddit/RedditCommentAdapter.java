@@ -16,7 +16,7 @@ public class RedditCommentAdapter extends BaseAdapter {
 
     private final Context mContext;
     private final List<RedditComment> mItems;
-
+    
     public RedditCommentAdapter(Context context, List<RedditComment> items) {
         mContext = context;
         mItems = items;
@@ -54,7 +54,7 @@ public class RedditCommentAdapter extends BaseAdapter {
         
         // Increase left padding for each level, but gradually less so that the comment
         // body will still have enough horizontal space
-        int depthOffset = level == 0 ? 0 : Math.max(0, (50 * level) - (20 * (level - 1))); 
+        int depthOffset = level == 0 ? 0 : Math.max(0, (50 * level) - (30 * (level - 1)));
         
         TextView author = (TextView) view.findViewById(R.id.author);
         author.setPadding(depthOffset, 0, 0, 0);
