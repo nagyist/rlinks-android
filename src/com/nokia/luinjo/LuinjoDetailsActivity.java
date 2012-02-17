@@ -1,12 +1,6 @@
 
 package com.nokia.luinjo;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +8,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -86,7 +79,8 @@ public class LuinjoDetailsActivity extends Activity {
         // Load the image bitmap in a non-blocking thread
         new Thread(new Runnable() {
             public void run() {
-                final Bitmap imageBitmap = getImageBitmapFromUrl(itemUrl);
+                final LuinjoHttpClient httpClient = new LuinjoHttpClient();
+                final Bitmap imageBitmap = httpClient.getImageBitmapFromUrl(itemUrl);
                 if (imageBitmap != null) {
                     mImageView.post(new Runnable() {
                         public void run() {
@@ -118,39 +112,6 @@ public class LuinjoDetailsActivity extends Activity {
                 });
             }
         }).start();
-    }
-
-    private Bitmap getImageBitmapFromUrl(String imageUrlStr) {
-        URL imageUrl = null;
-        HttpURLConnection connection = null;
-        InputStream is = null;
-        BufferedInputStream buffer = null;
-        Bitmap bitmap = null;
-
-        try {
-            imageUrl = new URL(imageUrlStr);
-            connection = (HttpURLConnection) imageUrl.openConnection();
-            is = connection.getInputStream();
-            buffer = new BufferedInputStream(is);
-            bitmap = BitmapFactory.decodeStream(buffer);
-        } catch (MalformedURLException e) {
-            Log.e(TAG, "Invalid URL: " + e.getMessage());
-        } catch (IOException ioe) {
-            Log.e(TAG, "I/O exception on trying to load image: " + ioe.getMessage());
-        } finally {
-            try {
-                if (is != null) {
-                    is.close();
-                }
-                if (buffer != null) {
-                    buffer.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return bitmap;
     }
 
     @Override

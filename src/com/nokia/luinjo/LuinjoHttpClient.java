@@ -1,11 +1,15 @@
 package com.nokia.luinjo;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -15,6 +19,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 public class LuinjoHttpClient {
@@ -102,5 +108,42 @@ public class LuinjoHttpClient {
 		}
 		
     	return sb.toString();
+    }
+    
+    public Bitmap getImageBitmapFromUrl(String imageUrlStr) {
+        if (!(imageUrlStr.startsWith("http"))) {
+            return null;
+        }
+        
+        URL imageUrl = null;
+        HttpURLConnection connection = null;
+        InputStream is = null;
+        BufferedInputStream buffer = null;
+        Bitmap bitmap = null;
+
+        try {
+            imageUrl = new URL(imageUrlStr);
+            connection = (HttpURLConnection) imageUrl.openConnection();
+            is = connection.getInputStream();
+            buffer = new BufferedInputStream(is);
+            bitmap = BitmapFactory.decodeStream(buffer);
+        } catch (MalformedURLException e) {
+            Log.e(TAG, "Invalid URL: " + e.getMessage());
+        } catch (IOException ioe) {
+            Log.e(TAG, "I/O exception on trying to load image: " + ioe.getMessage());
+        } finally {
+            try {
+                if (is != null) {
+                    is.close();
+                }
+                if (buffer != null) {
+                    buffer.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return bitmap;
     }
 }
