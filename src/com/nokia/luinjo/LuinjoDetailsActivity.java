@@ -22,13 +22,11 @@ import com.nokia.luinjo.http.RedditClient;
 
 public class LuinjoDetailsActivity extends Activity {
 
-    private static final String TAG = "DetailsActivity";
-
     private RedditLink mLinkItem;
     private RedditLinkView mLinkView;
     private ListView mCommentsView;
     private List<RedditComment> mComments;
-    
+
     private ViewSwitcher mViewSwitcher;
 
     /**
@@ -48,24 +46,25 @@ public class LuinjoDetailsActivity extends Activity {
         mViewSwitcher = (ViewSwitcher) findViewById(R.id.view_switcher);
 
         // Open link in browser on tap
-        mLinkView.populateWith(mLinkItem);
+        mLinkView.updateView(mLinkItem);
         mLinkView.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                final Intent intent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse(mLinkItem.getUrl()));
+                final Intent intent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse(mLinkItem
+                        .getUrl()));
                 startActivity(intent);
             }
-        });        
-        
+        });
+
         loadComments();
     }
-    
+
     private void loadComments() {
         mComments = new ArrayList<RedditComment>();
         mCommentsView.setAdapter(new RedditCommentAdapter(this, mComments));
-        
+
         new LoadCommentsTask().execute(mLinkItem);
     }
-    
+
     private class LoadCommentsTask extends AsyncTask<RedditLink, Integer, Void> {
         @Override
         protected Void doInBackground(RedditLink... params) {
@@ -73,7 +72,7 @@ public class LuinjoDetailsActivity extends Activity {
             mComments.addAll(client.getComments(params[0]));
             return null;
         }
-        
+
         @Override
         protected void onPostExecute(Void result) {
             ((RedditCommentAdapter) mCommentsView.getAdapter()).notifyDataSetChanged();

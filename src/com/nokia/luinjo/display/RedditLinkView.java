@@ -2,7 +2,9 @@
 package com.nokia.luinjo.display;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.text.Html;
 import android.util.AttributeSet;
@@ -16,6 +18,7 @@ import com.nokia.luinjo.R;
 import com.nokia.luinjo.http.LuinjoHttpClient;
 
 public class RedditLinkView extends RelativeLayout {
+    
     private final Context mContext;
     private ImageView mThumbnailView;
 
@@ -36,9 +39,9 @@ public class RedditLinkView extends RelativeLayout {
     public RedditLinkView(Context context, RedditLink item) {
         super(context);
 
-        mContext = context;
+        mContext = context;        
         setupView();
-        populateWith(item);
+        updateView(item);
     }
 
     private void setupView() {
@@ -53,7 +56,7 @@ public class RedditLinkView extends RelativeLayout {
         return ((TextView) this.findViewById(id));
     }
 
-    public void populateWith(RedditLink item) {
+    public void updateView(final RedditLink item) {
         getTextView(R.id.title).setText(Html.fromHtml(item.getTitle()).toString());
         getTextView(R.id.score).setText("" + item.getScore());
         getTextView(R.id.domain).setText(item.getDomain());
@@ -62,6 +65,12 @@ public class RedditLinkView extends RelativeLayout {
                         + mContext.getResources().getString(R.string.comments));
         getTextView(R.id.subreddit).setText(item.getSubreddit());
 
+        mThumbnailView.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                final Intent intent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse(item.getUrl()));
+                mContext.startActivity(intent);
+            }
+        });        
         showOrHideThumbnail(item);
     }
 
