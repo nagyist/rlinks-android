@@ -14,18 +14,18 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.ViewSwitcher;
 
-import com.nokia.luinjo.reddit.RedditClient;
-import com.nokia.luinjo.reddit.RedditComment;
-import com.nokia.luinjo.reddit.RedditCommentAdapter;
-import com.nokia.luinjo.reddit.RedditLinkItem;
-import com.nokia.luinjo.reddit.RedditLinkItemView;
+import com.nokia.luinjo.display.RedditComment;
+import com.nokia.luinjo.display.RedditCommentAdapter;
+import com.nokia.luinjo.display.RedditLink;
+import com.nokia.luinjo.display.RedditLinkView;
+import com.nokia.luinjo.http.RedditClient;
 
 public class LuinjoDetailsActivity extends Activity {
 
     private static final String TAG = "DetailsActivity";
 
-    private RedditLinkItem mLinkItem;
-    private RedditLinkItemView mLinkView;
+    private RedditLink mLinkItem;
+    private RedditLinkView mLinkView;
     private ListView mCommentsView;
     private List<RedditComment> mComments;
     
@@ -39,11 +39,11 @@ public class LuinjoDetailsActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         // Get link item passed with the intent
-        mLinkItem = (RedditLinkItem) getIntent().getSerializableExtra(
-                RedditLinkItem.class.getName());
+        mLinkItem = (RedditLink) getIntent().getSerializableExtra(
+                RedditLink.class.getName());
 
         setContentView(R.layout.details);
-        mLinkView = (RedditLinkItemView) findViewById(R.id.link_item);
+        mLinkView = (RedditLinkView) findViewById(R.id.link_item);
         mCommentsView = (ListView) findViewById(R.id.comments_list);
         mViewSwitcher = (ViewSwitcher) findViewById(R.id.view_switcher);
 
@@ -66,9 +66,9 @@ public class LuinjoDetailsActivity extends Activity {
         new LoadCommentsTask().execute(mLinkItem);
     }
     
-    private class LoadCommentsTask extends AsyncTask<RedditLinkItem, Integer, Void> {
+    private class LoadCommentsTask extends AsyncTask<RedditLink, Integer, Void> {
         @Override
-        protected Void doInBackground(RedditLinkItem... params) {
+        protected Void doInBackground(RedditLink... params) {
             RedditClient client = new RedditClient();
             mComments.addAll(client.getComments(params[0]));
             return null;

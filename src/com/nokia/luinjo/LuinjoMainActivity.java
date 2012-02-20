@@ -16,9 +16,9 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-import com.nokia.luinjo.reddit.RedditClient;
-import com.nokia.luinjo.reddit.RedditLinkAdapter;
-import com.nokia.luinjo.reddit.RedditLinkItem;
+import com.nokia.luinjo.display.RedditLink;
+import com.nokia.luinjo.display.RedditLinkAdapter;
+import com.nokia.luinjo.http.RedditClient;
 
 public class LuinjoMainActivity extends ListActivity {
 
@@ -37,12 +37,12 @@ public class LuinjoMainActivity extends ListActivity {
         final Context self = this;
         lv.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                RedditLinkItem item = (RedditLinkItem) getListAdapter().getItem(position);
+                RedditLink item = (RedditLink) getListAdapter().getItem(position);
 
                 // Start a new Activity, passing it the current Item as a
                 // Serializable
                 Intent intent = new Intent(self, LuinjoDetailsActivity.class);
-                intent.putExtra(RedditLinkItem.class.getName(), item);
+                intent.putExtra(RedditLink.class.getName(), item);
                 self.startActivity(intent);
             }
         });
@@ -55,7 +55,7 @@ public class LuinjoMainActivity extends ListActivity {
                 .getText(R.string.loading), true);
 
         RedditClient client = new RedditClient();
-        RedditLinkItem[] items = client.getTopStories();
+        RedditLink[] items = client.getTopStories();
         Log.d(TAG, "Loaded " + items.length + " items");
         RedditLinkAdapter adapter = new RedditLinkAdapter(this, items);
         setListAdapter(adapter);

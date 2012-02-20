@@ -1,4 +1,4 @@
-package com.nokia.luinjo.reddit;
+package com.nokia.luinjo.display;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -6,15 +6,15 @@ import java.util.Date;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class RedditLinkItem implements Serializable {
+public class RedditLink implements Serializable {
 	
 	/**
 	 * Generated version UID for serialization.
 	 */
 	private static final long serialVersionUID = -5669509681428117593L;
 
-	public static RedditLinkItem fromJson(JSONObject obj) throws JSONException {
-		RedditLinkItem rli = new RedditLinkItem();
+	public static RedditLink fromJson(JSONObject obj) throws JSONException {
+		RedditLink rli = new RedditLink();
 		rli.setAuthor(obj.getString("author"));
 		rli.setCreated(new Date(Long.valueOf(obj.getLong("created")) * 1000));
 		rli.setDomain(obj.getString("domain"));
@@ -48,7 +48,7 @@ public class RedditLinkItem implements Serializable {
 	
 	private String mUrl;
 
-	public RedditLinkItem() {}
+	public RedditLink() {}
 
 	public String getAuthor() {
 		return mAuthor;

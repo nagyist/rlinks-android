@@ -1,4 +1,4 @@
-package com.nokia.luinjo;
+package com.nokia.luinjo.http;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;

@@ -1,9 +1,10 @@
 
-package com.nokia.luinjo.reddit;
+package com.nokia.luinjo.display;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.text.Html;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,31 +12,28 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.nokia.luinjo.LuinjoHttpClient;
 import com.nokia.luinjo.R;
+import com.nokia.luinjo.http.LuinjoHttpClient;
 
-public class RedditLinkItemView extends RelativeLayout {
-
-    private static final String TAG = "RedditLinkItemView";
-
+public class RedditLinkView extends RelativeLayout {
     private final Context mContext;
     private ImageView mThumbnailView;
 
-    public RedditLinkItemView(Context context) {
+    public RedditLinkView(Context context) {
         super(context);
 
         mContext = context;
         setupView();
     }
 
-    public RedditLinkItemView(Context context, AttributeSet attributeSet) {
+    public RedditLinkView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
 
         mContext = context;
         setupView();
     }
 
-    public RedditLinkItemView(Context context, RedditLinkItem item) {
+    public RedditLinkView(Context context, RedditLink item) {
         super(context);
 
         mContext = context;
@@ -55,8 +53,8 @@ public class RedditLinkItemView extends RelativeLayout {
         return ((TextView) this.findViewById(id));
     }
 
-    public void populateWith(RedditLinkItem item) {
-        getTextView(R.id.title).setText(item.getTitle());
+    public void populateWith(RedditLink item) {
+        getTextView(R.id.title).setText(Html.fromHtml(item.getTitle()).toString());
         getTextView(R.id.score).setText("" + item.getScore());
         getTextView(R.id.domain).setText(item.getDomain());
         getTextView(R.id.num_comments).setText(
@@ -67,12 +65,12 @@ public class RedditLinkItemView extends RelativeLayout {
         showOrHideThumbnail(item);
     }
 
-    private void showOrHideThumbnail(RedditLinkItem item) {
+    private void showOrHideThumbnail(RedditLink item) {
         ImageView thumbnailView = (ImageView) this.findViewById(R.id.thumbnail);
         String thumbnailUrl = item.getThumbnail();
-        
+
         if (thumbnailUrl == null || thumbnailUrl.equals("")) {
-            // For links with no thumbnails, set the view visibility to GONE 
+            // For links with no thumbnails, set the view visibility to GONE
             // to make the layout reflow
             thumbnailView.setVisibility(View.GONE);
         } else {

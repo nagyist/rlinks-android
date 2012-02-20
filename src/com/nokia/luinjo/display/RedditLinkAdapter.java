@@ -1,4 +1,4 @@
-package com.nokia.luinjo.reddit;
+package com.nokia.luinjo.display;
 
 import android.content.Context;
 import android.view.View;
@@ -8,9 +8,9 @@ import android.widget.BaseAdapter;
 public class RedditLinkAdapter extends BaseAdapter {
 	
 	private final Context mContext;
-	private final RedditLinkItem[] mItems;
+	private final RedditLink[] mItems;
 	
-	public RedditLinkAdapter(Context context, RedditLinkItem[] items) {
+	public RedditLinkAdapter(Context context, RedditLink[] items) {
 		mContext = context;
 		mItems = items;
 	}
@@ -34,6 +34,6 @@ public class RedditLinkAdapter extends BaseAdapter {
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
-		return new RedditLinkItemView(mContext, mItems[position]);
+		return new RedditLinkView(mContext, mItems[position]);
 	}
 }

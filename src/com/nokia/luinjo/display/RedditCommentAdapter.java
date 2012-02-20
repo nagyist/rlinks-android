@@ -1,5 +1,5 @@
 
-package com.nokia.luinjo.reddit;
+package com.nokia.luinjo.display;
 
 import java.util.List;
 
