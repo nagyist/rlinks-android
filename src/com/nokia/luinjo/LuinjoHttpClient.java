@@ -51,19 +51,18 @@ public class LuinjoHttpClient {
 		String content;
 		if (jsonCache.containsKey(url)) {
 		    synchronized(this) {
-	            Log.d(TAG, "Reference to " + url + " found in cache...");
 	            content = jsonCache.get(url).get();
 	            if (content != null) {
-	                Log.d(TAG, "Recovered " + url + " from cache!");
 	                return content;
-	            }		        
+	            }
+	            Log.d(TAG, "Could not recover " + url + " from cache, reloading...");
+	            jsonCache.remove(url);
 		    }
 		}
 		
 		content = getContent(request);
 		if (content != null) {
 		    synchronized(this) {
-    		    Log.d(TAG, "Saving " + url + " in cache...");
     		    jsonCache.put(url, new SoftReference<String>(content));
 		    }
 		}
@@ -154,13 +153,12 @@ public class LuinjoHttpClient {
 
         if (imageCache.containsKey(imageUrlStr)) {
             synchronized(this) {
-                Log.d(TAG, "Reference to " + imageUrlStr + " found in cache!");
                 bitmap = imageCache.get(imageUrlStr).get();
                 if (bitmap != null) {
-                    Log.d(TAG, "Recovered " + imageUrlStr + " from cache!");
                     return bitmap;
                 }
                 Log.d(TAG, "Could not recover " + imageUrlStr + " from cache, reloading...");
+                imageCache.remove(imageUrlStr);
             }
         }        
         
@@ -189,7 +187,6 @@ public class LuinjoHttpClient {
         
         if (bitmap != null) {
             synchronized(this) {
-                Log.d(TAG, "Saving " + imageUrlStr + " in cache...");
                 imageCache.put(imageUrlStr, new SoftReference<Bitmap>(bitmap));
             }
         }
