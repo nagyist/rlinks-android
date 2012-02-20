@@ -63,9 +63,12 @@ public class RedditClient {
     }
 
     public List<RedditComment> getComments(RedditLink item) {
-        String commentsJson = httpClient
-                .getContent(REDDIT_BASE_URL + item.getPermalink() + ".json");
-
+        String commentsUrl = REDDIT_BASE_URL + "comments/" + item.getId() + ".json";
+        String commentsJson = httpClient.getContent(commentsUrl);
+        if (commentsJson == null) {
+            return null;
+        }
+        
         final List<RedditComment> comments = new ArrayList<RedditComment>();
         JSONArray commentsJsonArray = null;
         JSONArray childrenJsonArray = null;
@@ -86,7 +89,6 @@ public class RedditClient {
             try {
                 containerJsonObj = childrenJsonArray.getJSONObject(i);
                 dataJsonObj = containerJsonObj.getJSONObject("data");
-
                 addCommentWithChildren(comments, dataJsonObj, 0);
             } catch (JSONException e) {
                 Log.e(TAG, "Could not parse comment JSON: " + e.getMessage());

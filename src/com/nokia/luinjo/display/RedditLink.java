@@ -18,6 +18,7 @@ public class RedditLink implements Serializable {
 		rli.setAuthor(obj.getString("author"));
 		rli.setCreated(new Date(Long.valueOf(obj.getLong("created")) * 1000));
 		rli.setDomain(obj.getString("domain"));
+		rli.setId(obj.getString("id"));
 		rli.setNumComments(obj.getInt("num_comments"));
 		rli.setPermalink(obj.getString("permalink"));
 		rli.setSubreddit(obj.getString("subreddit"));
@@ -34,7 +35,9 @@ public class RedditLink implements Serializable {
 	
 	private String mDomain;
 	
-	private int mNumComments;
+	private String mId;
+	
+	private int mNumComments;		
 	
 	private String mPermalink;
 	
@@ -62,6 +65,10 @@ public class RedditLink implements Serializable {
 		return mDomain;
 	}
 
+	public String getId() {
+	    return mId;
+	}
+	
 	public int getNumComments() {
 		return mNumComments;
 	}
@@ -102,6 +109,10 @@ public class RedditLink implements Serializable {
 		this.mDomain = domain;
 	}
 
+	public void setId(String id) {
+	    this.mId = id;
+	}
+	
 	public void setNumComments(int mNumComments) {
 		this.mNumComments = mNumComments;
 	}
