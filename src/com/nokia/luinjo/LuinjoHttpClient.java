@@ -5,11 +5,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.ref.SoftReference;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -25,10 +28,18 @@ import android.util.Log;
 
 public class LuinjoHttpClient {
 	
+    private static Map<String, SoftReference<String>> jsonCache;
+    private static Map<String, SoftReference<Bitmap>> imageCache;
+    
 	private static final String TAG  = "LuinjoHttpClient";
+	
+	static {
+	    jsonCache = new HashMap<String, SoftReference<String>>();
+	    imageCache = new HashMap<String, SoftReference<Bitmap>>();
+	}
 
     public String getContent(String url) {
-    	HttpGet request = new HttpGet();    	
+    	HttpGet request = new HttpGet();
 		try {
 			URI uri = new URI(url);
 			request.setURI(uri);
@@ -36,7 +47,27 @@ public class LuinjoHttpClient {
 			Log.e(TAG, "Invalid URL: " + e.getMessage());
 			return null;
 		}
-    	return getContent(request);
+		
+		String content;
+		if (jsonCache.containsKey(url)) {
+		    synchronized(this) {
+	            Log.d(TAG, "Reference to " + url + " found in cache...");
+	            content = jsonCache.get(url).get();
+	            if (content != null) {
+	                Log.d(TAG, "Recovered " + url + " from cache!");
+	                return content;
+	            }		        
+		    }
+		}
+		
+		content = getContent(request);
+		if (content != null) {
+		    synchronized(this) {
+    		    Log.d(TAG, "Saving " + url + " in cache...");
+    		    jsonCache.put(url, new SoftReference<String>(content));
+		    }
+		}
+		return content;
     }
     
     // TODO: do data fetching in separate thread
@@ -121,6 +152,18 @@ public class LuinjoHttpClient {
         BufferedInputStream buffer = null;
         Bitmap bitmap = null;
 
+        if (imageCache.containsKey(imageUrlStr)) {
+            synchronized(this) {
+                Log.d(TAG, "Reference to " + imageUrlStr + " found in cache!");
+                bitmap = imageCache.get(imageUrlStr).get();
+                if (bitmap != null) {
+                    Log.d(TAG, "Recovered " + imageUrlStr + " from cache!");
+                    return bitmap;
+                }
+                Log.d(TAG, "Could not recover " + imageUrlStr + " from cache, reloading...");
+            }
+        }        
+        
         try {
             imageUrl = new URL(imageUrlStr);
             connection = (HttpURLConnection) imageUrl.openConnection();
@@ -141,6 +184,13 @@ public class LuinjoHttpClient {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+        }
+        
+        if (bitmap != null) {
+            synchronized(this) {
+                Log.d(TAG, "Saving " + imageUrlStr + " in cache...");
+                imageCache.put(imageUrlStr, new SoftReference<Bitmap>(bitmap));
             }
         }
 
