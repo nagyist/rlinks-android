@@ -11,8 +11,9 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="author name"
-        android:textSize="13sp"
+        android:textSize="14sp"
         android:textStyle="bold"
+        android:textColor="#20a4d4"
         />
     
     <TextView
@@ -20,7 +21,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="This is a comment"
-        android:textSize="12sp"
+        android:textSize="13sp"
         android:layout_below="@id/author"
         android:layout_marginTop="5dp"
         />
