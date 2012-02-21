@@ -1,5 +1,14 @@
+/*
+ * Copyright © 2012 Nokia Corporation. All rights reserved.
+ * Nokia and Nokia Connecting People are registered trademarks of Nokia Corporation. 
+ * Oracle and Java are trademarks or registered trademarks of Oracle and/or its
+ * affiliates. Other product and company names mentioned herein may be trademarks
+ * or trade names of their respective owners.
+ *  
+ * See LICENSE.TXT for license information.
+ */
 
-package com.nokia.luinjo.http;
+package com.nokia.example.luinjo.network;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +19,8 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
-import com.nokia.luinjo.display.RedditComment;
-import com.nokia.luinjo.display.RedditLink;
+import com.nokia.example.luinjo.display.RedditComment;
+import com.nokia.example.luinjo.display.RedditLink;
 
 public class RedditClient {
 
@@ -62,13 +71,14 @@ public class RedditClient {
         return items;
     }
 
+    // TODO: document the JSON response formats
     public List<RedditComment> getComments(RedditLink item) {
         String commentsUrl = REDDIT_BASE_URL + "comments/" + item.getId() + ".json";
         String commentsJson = httpClient.getContent(commentsUrl);
         if (commentsJson == null) {
             return null;
         }
-        
+
         final List<RedditComment> comments = new ArrayList<RedditComment>();
         JSONArray commentsJsonArray = null;
         JSONArray childrenJsonArray = null;

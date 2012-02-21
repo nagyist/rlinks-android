@@ -1,5 +1,14 @@
+/*
+ * Copyright © 2012 Nokia Corporation. All rights reserved.
+ * Nokia and Nokia Connecting People are registered trademarks of Nokia Corporation. 
+ * Oracle and Java are trademarks or registered trademarks of Oracle and/or its
+ * affiliates. Other product and company names mentioned herein may be trademarks
+ * or trade names of their respective owners.
+ *  
+ * See LICENSE.TXT for license information.
+ */
 
-package com.nokia.luinjo;
+package com.nokia.example.luinjo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +23,11 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.ViewSwitcher;
 
-import com.nokia.luinjo.display.RedditComment;
-import com.nokia.luinjo.display.RedditCommentAdapter;
-import com.nokia.luinjo.display.RedditLink;
-import com.nokia.luinjo.display.RedditLinkView;
-import com.nokia.luinjo.http.RedditClient;
+import com.nokia.example.luinjo.display.RedditComment;
+import com.nokia.example.luinjo.display.RedditCommentAdapter;
+import com.nokia.example.luinjo.display.RedditLink;
+import com.nokia.example.luinjo.display.RedditLinkView;
+import com.nokia.example.luinjo.network.RedditClient;
 
 public class LuinjoDetailsActivity extends Activity {
 
