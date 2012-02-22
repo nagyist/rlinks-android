@@ -10,31 +10,35 @@
 
 package com.nokia.example.luinjo.display;
 
+import java.util.List;
+
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.nokia.example.luinjo.model.RedditLink;
+
 public class RedditLinkAdapter extends BaseAdapter {
 
     private final Context mContext;
-    private final RedditLink[] mItems;
+    private final List<RedditLink> mItems;
 
-    public RedditLinkAdapter(Context context, RedditLink[] items) {
+    public RedditLinkAdapter(Context context, List<RedditLink> items) {
         mContext = context;
         mItems = items;
     }
 
     public int getCount() {
         if (mItems != null) {
-            return mItems.length;
+            return mItems.size();
         }
         return 0;
     }
 
     public Object getItem(int position) {
         if (mItems != null) {
-            return mItems[position];
+            return mItems.get(position);
         }
         return null;
     }
@@ -44,6 +48,6 @@ public class RedditLinkAdapter extends BaseAdapter {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-        return new RedditLinkView(mContext, mItems[position]);
+        return new RedditLinkView(mContext, mItems.get(position));
     }
 }

@@ -19,21 +19,20 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
-import com.nokia.example.luinjo.display.RedditComment;
-import com.nokia.example.luinjo.display.RedditLink;
+import com.nokia.example.luinjo.model.RedditComment;
+import com.nokia.example.luinjo.model.RedditLink;
 
 public class RedditClient {
 
     private static final String TAG = "RedditClient";
     private static final String REDDIT_BASE_URL = "http://www.reddit.com/";
     private static final LuinjoHttpClient httpClient;
-    private static final RedditLink[] NO_ITEMS = new RedditLink[] {};
 
     static {
         httpClient = new LuinjoHttpClient();
     }
 
-    public RedditLink[] getTopStories() {
+    public List<RedditLink> getTopLinks() {
         String contentJson = httpClient.getContent(REDDIT_BASE_URL + ".json");
 
         JSONObject jsonResponse;
@@ -43,28 +42,25 @@ public class RedditClient {
             jsonItems = jsonResponse.getJSONObject("data").getJSONArray("children");
         } catch (JSONException e) {
             Log.e(TAG, "Could not populate from JSON data: " + e.getMessage());
-            return NO_ITEMS;
+            return null;
         }
 
-        RedditLink[] items;
         int numItems = jsonItems.length();
         if (numItems == 0) {
-            items = new RedditLink[] {};
-        } else {
-            items = new RedditLink[jsonItems.length()];
+            return null;
+        }
+        
+        List<RedditLink> items = new ArrayList<RedditLink>();
+        RedditLink item;
+        JSONObject jsonObj;
 
-            RedditLink item;
-            JSONObject jsonObj;
-
-            for (int i = 0; i < numItems; i++) {
-                try {
-                    jsonObj = jsonItems.getJSONObject(i).getJSONObject("data");
-                    item = RedditLink.fromJson(jsonObj);
-                    items[i] = item;
-                } catch (JSONException e) {
-                    items[i] = new RedditLink();
-                    Log.e(TAG, "Could not parse JSON object: " + e.getMessage());
-                }
+        for (int i = 0; i < numItems; i++) {
+            try {
+                jsonObj = jsonItems.getJSONObject(i).getJSONObject("data");
+                item = RedditLink.fromJson(jsonObj);
+                items.add(item);
+            } catch (JSONException e) {
+                Log.e(TAG, "Could not parse JSON object: " + e.getMessage());
             }
         }
 

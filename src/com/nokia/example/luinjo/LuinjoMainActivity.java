@@ -10,6 +10,8 @@
 
 package com.nokia.example.luinjo;
 
+import java.util.List;
+
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -25,8 +27,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-import com.nokia.example.luinjo.display.RedditLink;
 import com.nokia.example.luinjo.display.RedditLinkAdapter;
+import com.nokia.example.luinjo.model.RedditLink;
 import com.nokia.example.luinjo.network.RedditClient;
 
 public class LuinjoMainActivity extends ListActivity {
@@ -64,8 +66,8 @@ public class LuinjoMainActivity extends ListActivity {
                 .getText(R.string.loading), true);
 
         RedditClient client = new RedditClient();
-        RedditLink[] items = client.getTopStories();
-        Log.d(TAG, "Loaded " + items.length + " items");
+        List<RedditLink> items = client.getTopLinks();
+        Log.d(TAG, "Loaded " + items.size() + " items");
         RedditLinkAdapter adapter = new RedditLinkAdapter(this, items);
         setListAdapter(adapter);
 

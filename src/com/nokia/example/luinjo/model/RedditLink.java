@@ -8,7 +8,7 @@
  * See LICENSE.TXT for license information.
  */
 
-package com.nokia.example.luinjo.display;
+package com.nokia.example.luinjo.model;
 
 import java.io.Serializable;
 import java.util.Date;

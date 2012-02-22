@@ -20,6 +20,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.nokia.example.luinjo.R;
+import com.nokia.example.luinjo.model.RedditComment;
 
 public class RedditCommentAdapter extends BaseAdapter {
 

@@ -23,10 +23,10 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.ViewSwitcher;
 
-import com.nokia.example.luinjo.display.RedditComment;
 import com.nokia.example.luinjo.display.RedditCommentAdapter;
-import com.nokia.example.luinjo.display.RedditLink;
 import com.nokia.example.luinjo.display.RedditLinkView;
+import com.nokia.example.luinjo.model.RedditComment;
+import com.nokia.example.luinjo.model.RedditLink;
 import com.nokia.example.luinjo.network.RedditClient;
 
 public class LuinjoDetailsActivity extends Activity {

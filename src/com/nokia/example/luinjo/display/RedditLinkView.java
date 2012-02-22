@@ -24,6 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nokia.example.luinjo.R;
+import com.nokia.example.luinjo.model.RedditLink;
 import com.nokia.example.luinjo.network.LuinjoHttpClient;
 
 public class RedditLinkView extends RelativeLayout {
