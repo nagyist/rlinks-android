@@ -2,7 +2,7 @@
 <resources>
     <string name="loading">Loading&#8230;</string>
     <string name="loading_comments">Loading comments&#8230;</string>
-    <string name="app_name">Luinjo</string>
+    <string name="app_name">RLinks</string>
 	<string name="comments">comments</string>
 	<string name="refresh_feed">Refresh</string>
 </resources>
